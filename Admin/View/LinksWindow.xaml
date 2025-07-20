@@ -1,0 +1,57 @@
+﻿<Window x:Class="FNS.Admin.View.LinksWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodel="clr-namespace:FNS.Admin.ViewModel"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+        mc:Ignorable="d"
+        Title="Ссылки" SizeToContent="WidthAndHeight" WindowStartupLocation="Manual"
+        Loaded="Window_Loaded">
+    <Window.DataContext>
+        <viewmodel:LinksViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding Links}" Grid.Row="0"
+                  AllowDrop="True"
+                  dd:DragDrop.IsDragSource="True"
+                  dd:DragDrop.IsDropTarget="True"
+                  dd:DragDrop.DropHandler="{Binding}"
+                  dd:DragDrop.UseDefaultDragAdorner="False"
+                  dd:DragDrop.UseDefaultEffectDataTemplate="False"
+                  SelectionMode="Single" SelectedItem="{Binding SelectedLink}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="5" Margin="0">
+                        <StackPanel Orientation="Vertical" >
+                            <Label Content="{Binding Title}" FontWeight="DemiBold"/>
+                            <Label Content="{Binding Url}" Foreground="Blue"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Добавить ссылку" Style="{StaticResource ButtonStyle}"
+                    Command="{Binding AddLinkCommand}"/>
+            <Button Grid.Column="1" Content="Удалить ссылку" Style="{StaticResource ButtonStyle}"
+                    Command="{Binding DeleteLinkCommand}"/>
+            <Button Grid.Column="2" Content="Сохранить порядок" Style="{StaticResource ButtonStyle}"
+                    Command="{Binding ChangedLinksCommand}"/>
+        </Grid>
+    </Grid>
+</Window>

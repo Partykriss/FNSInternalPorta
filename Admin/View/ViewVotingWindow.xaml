@@ -1,0 +1,71 @@
+﻿<Window x:Class="FNS.Admin.View.ViewVotingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:FNS.Admin.Converters"
+        mc:Ignorable="d"
+        Title="Просмотр голосования" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <converters:DateOnlyConverter x:Key="DateOnlyConverter"/>
+        <converters:BoolToStatusConverter x:Key="BoolToStatusConverter"/>
+        <Style x:Key="ConditionalLabelStyle" TargetType="Label" 
+               BasedOn="{StaticResource LabelViewStyle}">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Voting.IsActive}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="10">
+            <Label Content="{Binding Voting.Title}" Foreground="Green"
+                   FontSize="36" HorizontalAlignment="Center"
+                   Style="{StaticResource LabelViewStyle}"/>
+            <Label Content="{Binding Voting.Description}" FontSize="24"
+                   HorizontalAlignment="Center"
+                   Style="{StaticResource LabelViewStyle}"/>
+            <Label Content="{Binding Voting.EndDate, Converter={StaticResource DateOnlyConverter}}"
+                   Style="{StaticResource ConditionalLabelStyle}"
+                   FontSize="18" HorizontalAlignment="Center"/>
+            <Label Content="{Binding Voting.IsActive, Converter={StaticResource BoolToStatusConverter} }"
+                   Foreground="Red"
+                   FontSize="24" FontStyle="Italic"
+                   HorizontalAlignment="Center"
+                   Style="{StaticResource LabelViewStyle}"/>
+        </StackPanel>
+
+        <ListView ItemsSource="{Binding Voting.Answers}" Grid.Row="1" 
+                  Style="{StaticResource ListViewStyle}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Ответ" DisplayMemberBinding="{Binding Title}"/>
+                    <GridViewColumn Header="Количество голосов" DisplayMemberBinding="{Binding VotesCount}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Закрыть просмотр" Command="{Binding CloseCommand}" 
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"/>
+            <Button Content="Изменить статус" Command="{Binding DeactivateCommand}" 
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource ButtonStyle}"/>
+        </Grid>
+    </Grid>
+</Window>
