@@ -1,0 +1,12 @@
+﻿
+    <div class="feedback-message-container">
+        <div class="valid-feedback">
+            <h1>@TempData["SuccessMessage"]</h1>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    setTimeout(function () {
+        window.location.href = '@Url.Action("Index", "Home")'; // Переход на главную страницу через 5 секунд
+    }, 5000);
+</script>

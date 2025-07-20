@@ -1,0 +1,304 @@
+html, body {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Стили для шапки */
+.header {
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa; /* Цвет фона шапки */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для шапки */
+    border-bottom: 4px solid #000;
+}
+
+    .header .navbar-left {
+        font-size: 24px; /* Размер шрифта логотипа */
+        color: #007bff; /* Цвет логотипа */
+        text-decoration: none; /* Убрать подчеркивание текста */
+    }
+
+    .header .navbar-right {
+        font-size: 24px; /* Размер шрифта логотипа */
+        color: #007bff; /* Цвет логотипа */
+        text-decoration: none; /* Убрать подчеркивание текста */
+        min-width: 320px;
+    }
+
+
+
+/* Контейнер для основного содержимого */
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    gap: 10px;
+    min-height: 90vh;
+    padding: 20px;
+    overflow: auto;
+    height: 100%;
+}
+
+.feedback-message-container {
+    display: flex; /* Использование Flexbox */
+    justify-content: center; /* Центрирование содержимого по горизонтали */
+    align-items: center; /* Центрирование содержимого по вертикали */
+    height: 100vh; /* Высота контейнера равна высоте видимой области браузера */
+    text-align: center; /* Центрирование текста */
+}
+
+.valid-feedback {
+    max-width: 600px; /* Максимальная ширина контейнера с сообщением */
+    padding: 20px; /* Отступы внутри контейнера */
+}
+
+/* Стили для .news-container */
+.news-container {
+    border: 1px solid #888; /* Темно-серая рамка */
+    width: 300px;
+    padding: 15px;
+    max-height: 90vh;
+    overflow-y: auto;
+    order: 1;
+    word-break: break-word;
+    background-color: #f8f8f8; /* Светло-серый фон, напоминающий газету */
+    color: #333; /* Темно-серый текст для контраста */
+    font-family: 'Times New Roman', Times, serif; /* Шрифт, напоминающий газетный */
+}
+
+    .news-container h2 {
+        color: #4CAF50; /* Зеленый цвет заголовков для дополнительного акцента */
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .news-container p {
+        line-height: 1.4; /* Увеличенный межстрочный интервал для лучшего чтения */
+    }
+
+    .news-container h3 {
+        color: #0056b3; /* Голубой цвет для заголовков новостей */
+    }
+
+
+/* Стили для .links-container */
+.links-container {
+    padding: 15px;
+    flex-grow: 1; /* Расширяет .links-container, чтобы занять все доступное пространство */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: revert;
+    order: 2;
+    border: 2px solid #007bff;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 4px 8px rgba(0, 0, 0, 0.1); /* Тень для придания глубины */
+}
+
+    .links-container .link {
+        color: #0056b3;
+        text-decoration: none;
+        font-size: 12pt;
+        font-family: "Verdana", sans-serif;
+        padding: 5px 5px;
+        line-height: 1.4;
+        /* Дополнительные стили */
+    }
+
+.links-title {
+    grid-column: span 2; /* Заголовок занимает обе колонки */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.link {
+    text-decoration: none;
+    color: #007bff;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .link:hover, .link:focus {
+        background-color: #007bff;
+        color: white;
+    }
+
+.feedback-and-voting-container {
+    display: flex;
+    flex-direction: column; 
+    order: 3;
+}
+
+/* Стили для .feedback-container */
+.feedback-container {
+    margin-top: 30px;
+    border: 2px solid #007bff; /* Синяя граница */
+    border-radius: 10px; /* Закругленные углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для объемности */
+    padding: 15px;
+    flex-grow: 1;
+    max-height: 40%;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f8f8;
+    justify-content: space-between;
+    height: 100%; /* Добавьте это свойство */
+    order: 4;
+}
+
+/* Стили для текстового поля обратной связи */
+.feedback-textarea {
+    width: 100%; /* Ширина поля на весь доступный контейнер */
+    height: 140px; /* Высота текстового поля */
+    font-size: 16px; /* Размер шрифта в текстовом поле */
+    padding: 10px; /* Отступы внутри текстового поля */
+    border-radius: 5px; /* Слегка закругленные углы */
+    border: 1px solid #ccc; /* Тонкая граница */
+    resize: vertical; /* Позволяет пользователю изменять размер только по вертикали */
+    box-sizing: border-box; /* Учитывает padding и border в общей ширине элемента */
+}
+
+/* Стили для кнопки отправки */
+.feedback-submit-button {
+    background-color: #007bff; /* Синий цвет фона */
+    color: white; /* Белый цвет текста */
+    border: none; /* Убрать границу */
+    padding: 10px 20px; /* Вертикальный и горизонтальный отступ */
+    font-size: 16px; /* Размер шрифта */
+    border-radius: 5px; /* Закругление углов */
+    cursor: pointer; /* Курсор в виде руки для указания на интерактивность */
+    transition: background-color 0.3s, transform 0.2s; /* Плавная анимация фона и трансформации */
+}
+
+    .feedback-submit-button:hover {
+        background-color: #0056b3; /* Темно-синий цвет фона при наведении */
+    }
+
+    .feedback-submit-button:active {
+        transform: scale(0.95); /* Уменьшение размера кнопки при нажатии */
+    }
+
+/* Стили для кнопки вызова администратора */
+.call-admin-button {
+    width: 100%; /* Ширина кнопки, равная ширине экрана */
+    padding: 15px 20px; /* Паддинг для увеличения размера кнопки */
+    background-color: #4CAF50; /* Основной цвет фона */
+    color: white; /* Цвет текста */
+    border: none; /* Убрать стандартную рамку */
+    border-radius: 10px; /* Округлые края */
+    font-size: 20px; /* Размер шрифта */
+    cursor: pointer; /* Изменение курсора при наведении */
+    transition: background-color 0.3s, transform 0.3s; /* Плавная анимация цвета фона и трансформации */
+}
+
+    .call-admin-button:hover {
+        background-color: #45a049; /* Изменение цвета фона при наведении */
+    }
+
+    .call-admin-button:active {
+        transform: scale(0.98); /* Анимация нажатия (уменьшение размера) */
+    }
+
+/* Стили для контейнера голосования */
+.voting-container {
+    margin-top: 30px; /* Отступ сверху */
+    border: 2px solid #007bff; /* Синяя граница */
+    border-radius: 10px; /* Закругленные углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для объемности */
+    padding: 15px; /* Отступы внутри контейнера */
+    flex-grow: 1; /* Растягивание, чтобы занять доступное пространство */
+    max-height: 42vh; /* Максимальная высота */
+    width: 300px; /* Ширина */
+    display: flex;
+    flex-direction: column; /* Элементы выстраиваются вертикально */
+    order: 5 /* Порядок следования после остальных блоков */
+    background-color: #f8f8f8;
+    overflow-y: auto; /* Полоса прокрутки появляется автоматически, если содержимое превышает max-height */
+}
+
+    /* Стили для заголовка голосования */
+    .voting-container h2 {
+        color: #4CAF50; /* Зеленый цвет заголовка */
+        font-weight: bold;
+        text-align: center; /* Центрирование текста */
+    }
+
+    .voting-container h3 {
+        color: #4CAF50; /* Зеленый цвет заголовка */
+        font-weight: bold;
+        text-align: center; /* Центрирование текста */
+    }
+
+    /* Стили для текста внутри контейнера голосования */
+    .voting-container p {
+        margin: 10px;
+        line-height: 1.4; /* Увеличенный межстрочный интервал */
+        color: #333; /* Темно-серый текст */
+        font-size: 14px; /* Размер шрифта текста */
+        text-align: center;
+    }
+
+/* Стили для кнопки голосования */
+.vote-button {
+    padding: 10px 20px; /* Отступы */
+    background-color: #007bff; /* Синий цвет фона */
+    color: white; /* Белый текст */
+    border: none; /* Убрать границу */
+    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer; /* Курсор в виде руки */
+    text-align: center; /* Центрирование текста */
+    display: block; /* Блочный элемент */
+    width: 100%; /* Ширина на весь контейнер */
+    margin-top: 10px; /* Отступ сверху */
+}
+
+    .vote-button:hover {
+        background-color: #0056b3; /* Темно-синий цвет при наведении */
+    }
+
+/* Стили для футера */
+.footer {
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 1200px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .news-container, .links-container, .feedback-container {
+        width: 100%;
+        max-height: 90vh;
+    }
+
+    .links-container{
+        order: 1;
+    }
+
+    .news-container {
+        order: 2;
+    }
+
+    .feedback-container {
+        order: 3;
+    }
+}

@@ -1,0 +1,130 @@
+﻿@model HomeViewModel
+
+<div class="main-container">
+    <div class="news-container">
+
+        <h2>Новости</h2>
+
+        @foreach (var item in Model.News.Where(x => x.PublishDate >= DateTime.Now.AddDays(-14))
+                                        .OrderByDescending(x => x.PublishDate))
+        {
+            <div>
+                <h3>@item.Title</h3>
+                <p><em>Опубликовано: @item.PublishDate.ToString("dd/MM/yyyy HH:mm")</em></p>
+                <p>@item.Content</p>
+            </div>
+        }
+    </div>
+
+    <div class="links-container">
+        <h2 class="links-title">WEB РЕСУРСЫ ДОСТУПНЫЕ ИЗ ЛОКАЛЬНОЙ СЕТИ ИФНС РОССИИ</h2>
+        <!-- Отображение ссылок из базы данных -->
+        @foreach (var link in Model.Links)
+        {
+            <p><a class="link" href="@link.Url" target="_blank">@link.Title</a></p>
+        }
+    </div>
+
+    <div class="feedback-and-voting-container">
+        <div class="feedback-container">
+            <form method="post" asp-controller="Home" asp-action="PostCall">
+                <button type="submit" class="call-admin-button" id="callAdminButton">Вызвать администратора</button>
+            </form>
+            <script type="text/javascript">
+                document.addEventListener('keydown', function (e) {
+                    if (e.altKey && e.key === 'c') { // Alt + C
+                        e.preventDefault(); // Предотвращение стандартного действия
+                        document.getElementById('callAdminButton').click(); // Имитация клика по кнопке
+                    }
+                });
+            </script>
+
+            <h2>Обратная связь</h2>
+            <!-- Форма обратной связи -->
+            <form id="feedback-form" method="post" asp-controller="Home" asp-action="PostFeedback">
+                <textarea id="feedback-textarea" class="feedback-textarea" name="message" placeholder="Ваше сообщение"></textarea>
+                <br />
+                <button class="feedback-submit-button" type="submit">Отправить</button>
+            </form>
+
+            <script type="text/javascript">
+                document.getElementById('feedback-textarea').addEventListener('keydown', function (e) {
+                    if (e.ctrlKey && e.keyCode === 13) { // Ctrl + Enter
+                        document.getElementById('feedback-form').submit(); // Отправка формы
+                    }
+                });
+            </script>
+        </div>
+
+        <div class="voting-container">
+            @if (Model.CurrentVoting != null)
+            {
+                <h2>Активное Голосование</h2>
+                if (Model.HasVoted)
+                {
+                    <h3>@Model.CurrentVoting.Title</h3>
+                    <fieldset>
+                        <legend>@Model.CurrentVoting.Description</legend>
+                        @foreach (var answer in Model.CurrentVoting.Answers)
+                        {
+                            <div>
+                                <input type="radio" id="answer_@answer.Id" name="selectedAnswer" value="@answer.Id" disabled />
+                                <label for="answer_@answer.Id">@answer.Title</label>
+                            </div>
+                        }
+                    </fieldset>
+                    <h3 style="color:red">Вы уже проголосовали</h3>
+                }
+                else
+                {
+                    <h2>@Model.CurrentVoting.Title</h2>
+                    <form method="post" asp-controller="Home" asp-action="PostVote">
+                        <fieldset>
+                            <legeng>@Model.CurrentVoting.Description</legeng>
+
+                            @foreach (var answer in Model.CurrentVoting.Answers)
+                            {
+                                <div>
+                                    <input type="radio" id="answer_@answer.Id" name="selectedAnswerId" value="@answer.Id" />
+                                    <label for="answer_@answer.Id">@answer.Title</label>
+                                </div>
+                            }
+
+                            <button type="submit" class="vote-button">Проголосовать</button>
+                        </fieldset>
+                    </form>
+                }
+            }
+            else
+            {
+                if (Model.RecentVotings.Any())
+                {
+                    <h2>@(Model.RecentVotings.Count() > 1 ? "Прошедшие Голосования" : "Прошедшее Голосование")</h2>
+
+                    @foreach (var result in Model.RecentVotings)
+                    {
+                        <h3>@result.Title</h3>
+                        <p>@result.Description</p>
+                        <ul>
+                            @{
+                                var totalVotes = result.Answers.Sum(a => a.VotesCount);
+                            }
+                            @foreach (var answerResult in result.Answers)
+                            {
+                                <li>
+                                    @answerResult.Title - Голосов: @answerResult.VotesCount
+                                    @(totalVotes > 0 ? $"({Math.Round((double)answerResult.VotesCount / totalVotes * 100, 2)}%)" : "(0%)")
+                                </li>
+                            }
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <h2>В данный момент активных голосований нет</h2>
+                }
+            }
+        </div>
+    </div>
+</div>
+
